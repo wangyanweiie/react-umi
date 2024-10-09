@@ -28,7 +28,7 @@ const ProductList: React.FC<{
     },
     {
       title: 'Actions',
-      render(text: Record<string, string>, record: Record<string, string>) {
+      render(text: Record<string, string>, record: DataType) {
         return (
           <Popconfirm title="Delete?" onConfirm={() => onDelete(record.id)}>
             <Button>Delete</Button>

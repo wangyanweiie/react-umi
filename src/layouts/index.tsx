@@ -1,13 +1,22 @@
 import { ProLayout } from '@ant-design/pro-components';
-import { Link, Outlet, useAppData, useLocation } from 'umi';
+import { Link, Outlet, useAppData, useLocation, useMatch, useParams, useSearchParams } from 'umi';
 
 export default function Layout() {
   const { clientRoutes } = useAppData();
+  
   const location = useLocation();
+  const match = useMatch(location.pathname);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = useParams();
 
-  function handleMenuItemRender(menuItemProps, defaultDom) {
-    console.log('menuItemProps', menuItemProps);
-    console.log('defaultDom', defaultDom);
+  console.log('location 信息', location);
+  console.log('match 信息', match);
+  console.log('query 信息', searchParams);
+  console.log('路由动态参数', params);
+
+  function handleMenuItemRender(menuItemProps: any, defaultDom: any) {
+    // console.log('menuItemProps', menuItemProps);
+    // console.log('defaultDom', defaultDom);
 
     if (menuItemProps.isUrl || menuItemProps.children) {
       return defaultDom;

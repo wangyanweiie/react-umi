@@ -1,9 +1,8 @@
-import React from 'react';
 import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from 'umi';
 
 import ProductList from '@/components/ProductList';
-import styles from './products.less';
+import lessStyles from './products.less';
 
 export default function ProductsPage() {
   const queryClient = useQueryClient();
@@ -30,6 +29,7 @@ export default function ProductsPage() {
     mutationFn(id: string) {
       return axios.delete(`/api/products/${id}`);
     },
+
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: ['products']
@@ -44,7 +44,7 @@ export default function ProductsPage() {
 
   return (
     <div>
-      <h1 className={styles.title}>Page products</h1>
+      <h1 className={lessStyles.title}>Page products</h1>
       
       <ProductList
         products={productsQuery.data.data}
