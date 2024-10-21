@@ -13,6 +13,7 @@ export default function ProductsPage() {
    * 查询可以与任何基于 Promise 的方法（包括 GET 和 POST 方法）一起使用，以从服务器获取数据；
    * @params queryKey：该查询的一个唯一的键值
    * @params queryFn：一个返回 Promise 的函数
+   * @return { loading, error, data }
    */
   const productsQuery = useQuery({
     queryKey: ['products'],
@@ -30,7 +31,26 @@ export default function ProductsPage() {
       return axios.delete(`/api/products/${id}`);
     },
 
-    onSettled: () => {
+    // 预处理
+    onMutate: (variables) => {
+      console.log('mutate', variables);
+    },
+
+    // 错误处理
+    onError: (error, variables, context) => {
+      console.log('error', error, variables, context);
+    },
+    
+    // 成功处理
+    onSuccess: (data, variables, context) => {
+      console.log('success', data, variables, context);
+    },
+
+    // 无论成功与否，都会执行
+    onSettled: (data, error, variables, context) => {
+      console.log('settled', data, error, variables, context);
+
+      // 更新数据
       queryClient.invalidateQueries({
         queryKey: ['products']
       });
@@ -39,7 +59,7 @@ export default function ProductsPage() {
 
   // 查询暂时还没有数据
   if (productsQuery.isLoading) {
-    return null;
+    return 'loading...';
   };
 
   return (
